@@ -70,8 +70,8 @@ fn parse_order_data(data: &[u8]) -> Result<OrderData, Error> {
 fn parse_cell_data(index: usize, source: Source) -> Result<OrderData, Error> {
   let data = match load_cell_data(index, source) {
       Ok(data) => data,
-      Err(SysError::IndexOutOfBound) => Err(Error::IndexOutOfBound),
-      Err(err) => Err(err),
+      Err(SysError::IndexOutOfBound) => return Err(Error::IndexOutOfBound),
+      Err(err) => return Err(err.into()),
   };
   let order_data = match data.len() {
     ORDER_LEN => {
