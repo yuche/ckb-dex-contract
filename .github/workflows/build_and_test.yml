@@ -27,7 +27,7 @@ jobs:
       - name: Build shared binary
         run: |
           cd ckb-miscellaneous-scripts
-          chmod +x ./build
+          chmod -R a+rw ./build
           make install-tools
           make all-via-docker
           cd ..
