@@ -27,8 +27,8 @@ jobs:
       - name: Build shared binary
         run: |
           cd ckb-miscellaneous-scripts
-          make install-tools
-          make all-via-docker
+          sudo make install-tools
+          sudo make all-via-docker
           cd ..
 
       - uses: actions-rs/cargo@v1
