@@ -33,11 +33,12 @@ jobs:
           cd ..
 
       - name: Install Capsule
-        run: cargo install ckb-capsule --version 0.4.1
+        run: |
+          mkdir -p ./capsule curl -L https://github.com/nervosnetwork/capsule/releases/download/v0.4.1/capsule_v0.4.1_x86_64-linux.tar.gz | tar xvz -C ./capsule --strip-components=1
+          chmod +x ./capsule/.capsule
 
       - name: Build contracts
-        run: capsule build
+        run: ./capsule/.capsule build
       
       - name: Test contracts
-        run: capsule test
-
+        run: ./capsule/.capsule test
