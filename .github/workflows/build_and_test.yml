@@ -3,7 +3,7 @@ name: Build and test
 on: [push, pull_request]
 
 jobs:
-  ci:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,8 +27,8 @@ jobs:
       - name: Build shared binary
         run: |
           cd ckb-miscellaneous-scripts
-          sudo make install-tools
-          sudo make all-via-docker
+          make install-tools
+          make all-via-docker
           cd ..
 
       - uses: actions-rs/cargo@v1
