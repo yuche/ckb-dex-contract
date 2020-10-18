@@ -32,9 +32,8 @@ jobs:
           make all-via-docker
           cd ..
 
-      - uses: actions-rs/cargo@v1
-        with:
-          command: install ckb-capsule@0.4.1
+      - name: Install Capsule
+        run: cargo install ckb-capsule --version 0.4.1
 
       - name: Build contracts
         run: capsule build
