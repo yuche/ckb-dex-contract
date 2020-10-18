@@ -1,0 +1,39 @@
+name: Build and test
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2020-09-28
+          override: true
+
+      - uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_channel: nightly
+          # this value please see https://github.com/AkihiroSuda/moby-snapshot/releases
+          docker_nightly_version: snapshot-20201008
+
+      - name: Init submodules
+        run: git submodule init && git submodule update -r --init
+
+      - name: Build shared binary
+        run: |
+          cd ckb-miscellaneous-scripts && git submodule init && git submodule update
+          make install-tools && make all-via-docker && cd ..
+
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install ckb-capsule@0.4.1
+
+      - name: Build
+        run: capsule build
+      
+      - name: Test
+        run: capsule test
+
